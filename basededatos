@@ -1,0 +1,40 @@
+-- Crear la tabla Profesor
+CREATE TABLE Profesor (
+  id_profesor INT NOT NULL AUTO_INCREMENT,
+  nombre_profesor VARCHAR(50) NOT NULL,
+  matricula VARCHAR(10) NOT NULL,
+  contraseña VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id_profesor)
+);
+
+-- Crear la tabla Materia
+CREATE TABLE Materia (
+  id_materia INT NOT NULL AUTO_INCREMENT,
+  nombre_materia VARCHAR(50) NOT NULL,
+  id_profesor INT NOT NULL,
+  PRIMARY KEY (id_materia),
+  FOREIGN KEY (id_profesor) REFERENCES Profesor(id_profesor)
+);
+
+-- Crear la tabla Alumno
+CREATE TABLE Alumno (
+  id_alumno INT NOT NULL AUTO_INCREMENT,
+  nombre_alumno VARCHAR(50) NOT NULL,
+  matricula_alumno VARCHAR(10) NOT NULL,
+  correo_alumno VARCHAR(50) NOT NULL,
+  id_materia INT NOT NULL,
+  PRIMARY KEY (id_alumno),
+  FOREIGN KEY (id_materia) REFERENCES Materia(id_materia)
+);
+
+-- Crear la tabla Asistencia
+CREATE TABLE Asistencia (
+  id_asistencia INT NOT NULL AUTO_INCREMENT,
+  fecha DATE NOT NULL,
+  estatus VARCHAR(50) NOT NULL,
+  id_alumno INT NOT NULL,
+  id_materia INT NOT NULL,
+  PRIMARY KEY (id_asistencia),
+  FOREIGN KEY (id_alumno) REFERENCES Alumno(id_alumno),
+  FOREIGN KEY (id_materia) REFERENCES Materia(id_materia)
+);
