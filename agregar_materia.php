@@ -3,8 +3,9 @@
 include "conexion.php";
 // Obtenemos los datos enviados por el formulario
 $nombre_materia = $_POST["nombre_materia"];
-$id_profesor = $_POST["id_profesor"];
-
+//$id_profesor = $_POST["id_profesor"];
+session_start();
+$id_profesor = $_SESSION['id_profesor'];
 // Creamos la consulta SQL para agregar la nueva materia
 $sql = "INSERT INTO materia (nombre_materia, id_profesor) VALUES ('$nombre_materia', $id_profesor)";
 

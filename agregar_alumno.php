@@ -30,5 +30,5 @@ while ($asistencia = mysqli_fetch_assoc($asistencias)) {
 }
     // Cierra la conexión a la base de datos
     mysqli_close($conexion);
-header('Location: index.php');
+header('Location: control_asistencias.php');
 ?>
