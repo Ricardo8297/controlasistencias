@@ -1,9 +1,9 @@
 <?php
 // Datos para la conexión a la base de datos
-$servidor = "localhost";
-$usuario = "Ricardo";
-$password = "123";
-$base_de_datos = "control_de_asistencias";
+$servidor = "containers-us-west-138.railway.app";
+$usuario = "root";
+$password = "vhLqwnvYX1wZIvimSfBQ";
+$base_de_datos = "railway";
 
 // Creamos la conexión a la base de datos
 $conexion = mysqli_connect($servidor, $usuario, $password, $base_de_datos);
