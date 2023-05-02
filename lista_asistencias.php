@@ -19,23 +19,12 @@ while ($fila_fecha = mysqli_fetch_assoc($resultado_fechas)) {
   $fechas[] = $fila_fecha['fecha'];
 }
 
-// Mostrar la tabla de asistencias
-echo "<table>";
-echo "<thead>";
-echo "<tr>";
-echo "<th>Nombre del alumno</th>";
-foreach ($fechas as $fecha) {
-  echo "<th>$fecha</th>";
-}
-echo "</tr>";
-echo "</thead>";
-echo "<tbody>";
+// Crear un arreglo con los datos de asistencia de los alumnos
+$datos_asistencia = array();
 while ($fila = mysqli_fetch_assoc($resultado)) {
   $id_alumno = $fila['id_alumno'];
   $nombre_alumno = $fila['nombre_alumno'];
-
-  echo "<tr>";
-  echo "<td>$nombre_alumno</td>";
+  $asistencias = array();
   foreach ($fechas as $fecha) {
     // Obtener el estatus de la asistencia del alumno en la fecha
     $query_asistencia = "SELECT * FROM asistencia WHERE id_alumno = $id_alumno AND id_materia = $id_materia AND fecha = '$fecha'";
@@ -45,13 +34,81 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
     } else {
       $estatus = "";
     }
-    echo "<td>$estatus</td>";
+    $asistencias[] = $estatus;
   }
-  echo "</tr>";
+  $datos_asistencia[] = array(
+    "nombre" => $nombre_alumno,
+    "asistencias" => $asistencias
+  );
 }
-echo "</tbody>";
-echo "</table>";
+$asistencias = array();
+foreach ($fechas as $fecha) {
+  $query_asistencias = "SELECT COUNT(*) AS num_asistencias FROM asistencia WHERE id_materia = $id_materia AND fecha = '$fecha' AND estatus = 'presente'";
+  $resultado_asistencias = mysqli_query($conexion, $query_asistencias);
+  $fila_asistencias = mysqli_fetch_assoc($resultado_asistencias);
+  $num_asistencias = $fila_asistencias['num_asistencias'];
+  $asistencias[] = $num_asistencias;
+}
 
 // Cierra la conexión a la base de datos
 mysqli_close($conexion);
 ?>
+
+<!-- Mostrar la tabla de asistencias -->
+<table>
+  <thead>
+    <tr>
+      <th>Nombre del alumno</th>
+      <?php foreach ($fechas as $fecha) { ?>
+        <th><?php echo $fecha; ?></th>
+      <?php } ?>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($datos_asistencia as $datos_alumno) { ?>
+      <tr>
+        <td><?php echo $datos_alumno["nombre"]; ?></td>
+        <?php foreach ($datos_alumno["asistencias"] as $asistencia) { ?>
+          <td><?php echo $asistencia; ?></td>
+        <?php } ?>
+      </tr>
+    <?php } ?>
+  </tbody>
+</table>
+
+<canvas id="grafica-asistencias"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var ctx = document.getElementById('grafica-asistencias').getContext('2d');
+  var chart = new Chart(ctx, {
+    animationEnabled: true,
+   exportEnabled: true,
+    type: 'bar',
+    data: {
+      labels: <?php echo json_encode($fechas); ?>,
+      datasets: [
+        {
+          label: 'Asistencias',
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          data: <?php echo json_encode($asistencias); ?>,
+        }
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }]
+      },
+      legend: {
+        display: false
+      }
+    }
+  });
+
+</script>
