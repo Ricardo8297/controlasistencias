@@ -44,6 +44,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 $asistencias = array();
 foreach ($fechas as $fecha) {
   $query_asistencias = "SELECT COUNT(*) AS num_asistencias FROM asistencia WHERE id_materia = $id_materia AND fecha = '$fecha' AND estatus = 'presente'";
+  //$query_asistencias = "SELECT COUNT(*) AS num_asistencias FROM asistencia WHERE id_materia = $id_materia AND fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' AND estatus = 'presente'";
   $resultado_asistencias = mysqli_query($conexion, $query_asistencias);
   $fila_asistencias = mysqli_fetch_assoc($resultado_asistencias);
   $num_asistencias = $fila_asistencias['num_asistencias'];
@@ -110,5 +111,4 @@ mysqli_close($conexion);
       }
     }
   });
-
 </script>
