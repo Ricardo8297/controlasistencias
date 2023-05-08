@@ -18,7 +18,7 @@ $fechas = array();
 while ($fila_fecha = mysqli_fetch_assoc($resultado_fechas)) {
   $fechas[] = $fila_fecha['fecha'];
 }
-
+sort($fechas);
 // Crear un arreglo con los datos de asistencia de los alumnos
 $datos_asistencia = array();
 while ($fila = mysqli_fetch_assoc($resultado)) {

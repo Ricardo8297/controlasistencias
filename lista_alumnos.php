@@ -5,6 +5,7 @@
 </head>
 <body>
 <?php
+date_default_timezone_set('America/Mexico_City');
     // Conexión a la base de datos
 	include('conexion.php');
     $fecha_actual = date('Y-m-d');

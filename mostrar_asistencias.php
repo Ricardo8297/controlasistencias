@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets\dist\bootstrap-5.3.0-alpha3-dist\css\bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="css\siderbarazul.css" rel="stylesheet">
+    <script src="css\sidebarazul.js"></script>
+  <script src="assets\dist\bootstrap-5.3.0-alpha3-dist\js\popper.min.js"></script>
+  <script src="assets\dist\bootstrap-5.3.0-alpha3-dist\js\bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/96673f889c.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+<button class="openbtn btn" onclick="toggleNav()">&#9776;</button>
+<div class="sidebar">
+<a href="control_asistencias.php" ><i class="fa-solid fa-house"></i> Home</a>
+  <a href="form_agregar_materia.php"><i class="fa-solid fa-file-circle-plus fa-bounce"></i> Agregar una materia</a>
+  <a href="form_agregar_alumnos.php"><i class="fa-solid fa-address-book fa-bounce" ></i> Agregar alumnos</a>
+  <a href="form_asistencias.php" style="background-color: white;color: #007bff;"><i class="fa-solid fa-list-check fa-beat"></i> Revisar asistencias de los alumnos</a>
+  <form method="post" action="cerrar_sesion.php">
+    <button type="submit" class="buttoncerrarsesion btn btn-danger">Cerrar sesión</button>
+  </form>
+</div>
+<div id="main">
 <?php
 // Conectar a la base de datos
 require "conexion.php";
@@ -6,14 +32,14 @@ require "conexion.php";
 $id_materia = $_POST['materia'];
 $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_fin = $_POST['fecha_fin'];
-
+$dataPoints = array();
 // Obtener la lista de alumnos de la materia
 $query = "SELECT * FROM alumno WHERE id_materia = $id_materia";
 $resultado = mysqli_query($conexion, $query);
 
 // Mostrar la tabla de asistencias
-echo "<table>";
-echo "<thead>";
+echo "<table class='table'>";
+echo "<thead class='dark'>";
 echo "<tr>";
 echo "<th>Nombre del alumno</th>";
 echo "<th>Asistencias</th>";
@@ -21,6 +47,7 @@ echo "<th>Ausencias</th>";
 echo "</tr>";
 echo "</thead>";
 echo "<tbody>";
+echo "</br>";
 while ($fila = mysqli_fetch_assoc($resultado)) {
   $id_alumno = $fila['id_alumno'];
   $nombre_alumno = $fila['nombre_alumno'];
@@ -38,8 +65,11 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
     } else {
       $ausencias_count++;
     }
+   
+
   }
 
+  $dataPoints[] = array("label"=> $nombre_alumno, "y"=> $asistencias_count);
   echo "<tr>";
   echo "<td>$nombre_alumno</td>";
   echo "<td>$asistencias_count</td>";
@@ -51,7 +81,7 @@ echo "</table>";
 ?>
 <?php
  
- $dataPoints = array(
+ $dataPointsas = array(
    array("x"=> 10, "y"=> 41),
    array("x"=> 20, "y"=> 35, "indexLabel"=> "Lowest"),
    array("x"=> 30, "y"=> 50),
@@ -77,9 +107,9 @@ echo "</table>";
  var chart = new CanvasJS.Chart("chartContainer", {
   animationEnabled: true,
 	exportEnabled: true,
-   theme: "light1", // "light1", "light2", "dark1", "dark2"
+   theme: "light2", // "light1", "light2", "dark1", "dark2"
    title:{
-     text: "Simple Column Chart with Index Labels"
+     text: "Total de asistencias por alumno",
    },
    axisY:{
      includeZero: true
@@ -100,5 +130,6 @@ echo "</table>";
  <body>
  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
- </body>
- </html>          
+ </div>
+</body>
+</html>

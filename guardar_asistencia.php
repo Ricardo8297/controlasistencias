@@ -5,7 +5,7 @@ include('conexion.php');
 // Obtener los valores enviados por el formulario
 $id_materia = $_POST['materia'];
 $asistencias = $_POST['asistencia'];
-
+date_default_timezone_set('America/Mexico_City');
 // Obtener la fecha actual
 $fecha_actual = date('Y-m-d');
 
