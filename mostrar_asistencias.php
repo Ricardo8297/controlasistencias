@@ -101,6 +101,7 @@ echo "</table>";
  <!DOCTYPE HTML>
  <html>
  <head>  
+
  <script>
  window.onload = function () {
   
@@ -128,8 +129,24 @@ echo "</table>";
  </script>
  </head>
  <body>
+ <form action="filepdf.php" method="post" class="mb-5">
+  <!--<label for="materia">Materia:</label><label for="fecha_inicio">Fecha de inicio:</label><label for="fecha_fin">Fecha de fin:</label>-->
+  <input type="hidden"name="materia" value="<?php echo $id_materia; ?>">
+  <br>
+  
+  <input type="hidden" name="fecha_inicio" value="<?php echo $fecha_inicio; ?>">
+  <br>
+  
+  <input type="hidden" name="fecha_fin" value="<?php echo $fecha_fin; ?>">
+  <br>
+    <div class="text-center">
+    <input type="submit" value="Generar tabla PDF" class="btn btn-info text-center">
+    </div>
+</form>
+
  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
  </div>
 </body>
 </html>
