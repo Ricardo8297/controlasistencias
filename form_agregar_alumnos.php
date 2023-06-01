@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,13 +31,16 @@
   </form>
 </div>
 <div id="main">
+<?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
 <h2>Agregar Alumno a  una Materia</h2>
     <form action="agregar_alumno.php" method="POST">
       <label for="nombre">Nombre del Alumno:</label>
-      <input type="text" id="nombre" name="nombre" required><br>
+      <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" required><br>
 
       <label for="matricula">Matrícula del Alumno:</label>
-      <input type="text" id="matricula" name="matricula" required><br>
+      <input type="text" id="matricula" name="matricula" pattern="[0-9]+" title="Ingresa solo números" required><br>
 
       <label for="correo">Correo del Alumno:</label>
       <input type="email" id="correo" name="correo" required><br>

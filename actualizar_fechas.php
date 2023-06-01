@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +31,9 @@
   </form>
 </div>
 <div id="main">
+<?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
 <?php
 // Conectar a la base de datos
 include "conexion.php";
@@ -51,13 +61,13 @@ $alumnos = mysqli_query($conexion, $query);
 // Crear la tabla de asistencias
 echo "<form method='post' action='guardar_actualizar_fechas.php'>"; // Formulario para guardar las asistencias modificadas
 echo "<input type='hidden' name='id_materia' value='$id_materia'>"; // Campo oculto para enviar el ID de la materia
-echo "<table>"; // Iniciar la tabla
+echo "<table class='table table-hover '>"; // Iniciar la tabla
 echo "<thead><tr><th>Alumno</th>"; // Crear la fila de encabezado de la tabla
 foreach ($fechas as $fecha) { // Iterar por las fechas
   echo "<th>$fecha</th>"; // Agregar la fecha a la fila de encabezado
 }
 echo "</tr></thead>";
-echo "<tbody>";
+echo "<tbody class='table-group-divider'>";
 while ($alumno = mysqli_fetch_assoc($alumnos)) { // Iterar por los alumnos
   $id_alumno = $alumno['id_alumno'];
   $nombre_alumno = $alumno['nombre_alumno'];

@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,15 +25,18 @@
       <div class="col-md-6">
         <div class="card mt-5">
           <div class="card-body">
+          <?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
             <h1 class="text-center mb-4">Registro profesor</h1>
             <form action="guardar_profesor.php" method="post">
               <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" required><br><br>
+                <input type="text" class="form-control" name="nombre" id="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras y espacios" required><br><br>
               </div>
               <div class="form-group">
                 <label for="matricula">Matrícula:</label>
-                <input type="text" class="form-control" name="matricula" id="matricula" required><br><br>
+                <input type="text" class="form-control" name="matricula" id="matricula" pattern="[0-9]+" title="Ingresa solo números" required><br><br>
               </div>
               <div class="form-group">
                 <label for="contrasena">Contraseña:</label>

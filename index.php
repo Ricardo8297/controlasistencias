@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,11 +19,17 @@
 </head>
 
 <body>
+
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<div class="card mt-5">
 					<div class="card-body">
+						    <!-- Mostrar el mensaje de error si existe -->
+    <?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
+
 						<h1 class="text-center mb-4">Iniciar Sesión</h1>
 						<form method="post" action="login.php">
 							<div class="form-group">

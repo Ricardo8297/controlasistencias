@@ -27,26 +27,55 @@
 <?php
 // Conectar a la base de datos
 require "conexion.php";
+if (isset($_POST['mostrar_asistencias'])) {
+  // El botón "Mostrar asistencias" ha sido presionado
+  // Procesar los datos para mostrar asistencias
+  $id_materia = $_POST['materia'];
+  $fecha_inicio = $_POST['fecha_inicio'];
+  $fecha_fin = $_POST['fecha_fin'];
 
+  // Resto de la lógica para mostrar asistencias
+} elseif (isset($_POST['parcial_1'])) {
+  // El botón "Parcial 1" ha sido presionado
+  // Procesar los datos para el parcial 1
+  $id_materia = $_POST['materia'];
+  $fecha_inicio = '2023-01-31'; // Fecha de inicio preestablecida para el parcial 1
+  $fecha_fin = '2023-02-28'; // Fecha de fin preestablecida para el parcial 1
+
+  // Resto de la lógica para el parcial 1
+}elseif (isset($_POST['parcial_2'])) {
+  // El botón "Parcial 1" ha sido presionado
+  // Procesar los datos para el parcial 1
+  $id_materia = $_POST['materia'];
+  $fecha_inicio = '2023-03-01'; // Fecha de inicio preestablecida para el parcial 1
+  $fecha_fin = '2023-04-30'; // Fecha de fin preestablecida para el parcial 1
+
+  // Resto de la lógica para el parcial 1
+}elseif (isset($_POST['parcial_3'])) {
+  // El botón "Parcial 1" ha sido presionado
+  // Procesar los datos para el parcial 1
+  $id_materia = $_POST['materia'];
+  $fecha_inicio = '2023-05-01'; // Fecha de inicio preestablecida para el parcial 1
+  $fecha_fin = '2023-06-30'; // Fecha de fin preestablecida para el parcial 1
+
+  // Resto de la lógica para el parcial 1
+}
 // Obtener los valores del formulario
-$id_materia = $_POST['materia'];
-$fecha_inicio = $_POST['fecha_inicio'];
-$fecha_fin = $_POST['fecha_fin'];
 $dataPoints = array();
 // Obtener la lista de alumnos de la materia
 $query = "SELECT * FROM alumno WHERE id_materia = $id_materia";
 $resultado = mysqli_query($conexion, $query);
 
 // Mostrar la tabla de asistencias
-echo "<table class='table'>";
-echo "<thead class='dark'>";
+echo "<table class='table table-hover'>";
+echo "<thead>";
 echo "<tr>";
 echo "<th>Nombre del alumno</th>";
 echo "<th>Asistencias</th>";
 echo "<th>Ausencias</th>";
 echo "</tr>";
 echo "</thead>";
-echo "<tbody>";
+echo "<tbody >";
 echo "</br>";
 while ($fila = mysqli_fetch_assoc($resultado)) {
   $id_alumno = $fila['id_alumno'];

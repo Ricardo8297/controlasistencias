@@ -31,9 +31,9 @@ $pdf->Cell(0, 10, 'Tabla de Asistencias', 0, 1, 'C');
 $pdf->SetFont('Arial', '', 12);
 
 // Crear la tabla de asistencias
-$pdf->Cell(40, 10, 'Nombre del alumno', 1);
-$pdf->Cell(40, 10, 'Asistencias', 1);
-$pdf->Cell(40, 10, 'Ausencias', 1);
+$pdf->Cell(120, 10, '                                 Nombre del alumno', 1);
+$pdf->Cell(30, 10, '   Asistencias', 1);
+$pdf->Cell(30, 10, '   Ausencias', 1);
 $pdf->Ln();
 
 // Iterar sobre los alumnos y mostrar sus asistencias en la tabla
@@ -60,9 +60,9 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
   $dataPoints[] = array("label"=> $nombre_alumno, "y"=> $asistencias_count);
 
   // Agregar una fila a la tabla
-  $pdf->Cell(40, 10, $nombre_alumno, 1);
-  $pdf->Cell(40, 10, $asistencias_count, 1);
-  $pdf->Cell(40, 10, $ausencias_count, 1);
+  $pdf->Cell(120, 10, $nombre_alumno, 1);
+  $pdf->Cell(30, 10, $asistencias_count, 1);
+  $pdf->Cell(30, 10, $ausencias_count, 1);
   $pdf->Ln();
 }
 

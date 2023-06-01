@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +33,13 @@
 </div>
 
 <div id="main">
+<?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
 <h2>Agregar materia</h2>
     <form action="agregar_materia.php" method="post">
         <label for="nombre_materia">Nombre de la Materia:</label>
-        <input type="text" id="nombre_materia" name="nombre_materia"><br>
+        <input type="text" id="nombre_materia" name="nombre_materia" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" required ><br>
         <!--<h5>Solo se puede el 1 solo hay un profesor</h5>
     <label for="id_profesor">ID del Profesor:</label>
     <input type="number" id="id_profesor" name="id_profesor"><br>

@@ -3,7 +3,7 @@ require "conexion.php";
 
 // Obtener el ID de la materia
 $id_materia = $_POST['id_materia'];
-
+session_start();
 // Obtener las asistencias de la materia
 $query = "SELECT asistencia.*, alumno.nombre_alumno FROM asistencia INNER JOIN alumno ON asistencia.id_alumno = alumno.id_alumno WHERE alumno.id_materia = $id_materia ORDER BY asistencia.fecha ASC, alumno.nombre_alumno ASC";
 $asistencias = mysqli_query($conexion, $query);
@@ -37,7 +37,9 @@ while ($alumno = mysqli_fetch_assoc($alumnos)) { // Iterar por los alumnos
     }
   }
 }
-
+$_SESSION['form_error_message'] = "Asistencias actualizadas correctamente.";
+header('Location: control_asistencias.php');
+exit();
 // Redirigir de regreso a la página de asistencias
-header("Location: asistencias.php?id_materia=$id_materia");
+//header("Location: asistencias.php?id_materia=$id_materia");
 ?>

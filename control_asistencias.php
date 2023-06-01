@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar si hay un mensaje de error almacenado en $_SESSION
+$error_message = isset($_SESSION['form_error_message']) ? $_SESSION['form_error_message'] : "";
+unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESSION
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +33,9 @@
   </form>
 </div>
 <div id="main">
+    <?php if (!empty($error_message)): ?>
+        <p><?php echo $error_message; ?></p>
+    <?php endif; ?>
 <form method="POST" action="registrar_asistencia.php" class="mb=5">
     <h2>Pasar lista</h2>
     <h3>Selecciona una materia</h3>
