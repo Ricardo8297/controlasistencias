@@ -36,16 +36,27 @@ unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESS
 <?php if (!empty($error_message)): ?>
         <p><?php echo $error_message; ?></p>
     <?php endif; ?>
-<h2>Agregar materia</h2>
-    <form action="agregar_materia.php" method="post">
-        <label for="nombre_materia">Nombre de la Materia:</label>
-        <input type="text" id="nombre_materia" name="nombre_materia" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" required ><br>
-        <!--<h5>Solo se puede el 1 solo hay un profesor</h5>
-    <label for="id_profesor">ID del Profesor:</label>
-    <input type="number" id="id_profesor" name="id_profesor"><br>
-    -->
-        <input type="submit" value="Agregar Materia">
-    </form>
+    <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Agregar materia</h2>
+                    <form action="agregar_materia.php" method="post">
+                        <div class="form-group">
+                            <label for="nombre_materia">Nombre de la Materia:</label>
+                            <input type="text" id="nombre_materia" name="nombre_materia" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" class="form-control" required>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Agregar Materia" class="btn btn-info mt-5">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 <button class="openbtn" onclick="toggleNav()">&#9776;</button>

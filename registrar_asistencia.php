@@ -58,14 +58,14 @@ if (mysqli_num_rows($resultado) > 0) {
     ?>
 	<form method="POST" action="guardar_asistencia.php">
 		<h2>Lista de alumnos:</h2>
-		<table>
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>Nombre del alumno</th>
 					<th>Asistencia</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="table-group-divider">
 				<?php
 					// Conexión a la base de datos
 					include('conexion.php');
@@ -91,7 +91,7 @@ if (mysqli_num_rows($resultado) > 0) {
 			</tbody>
 		</table>
 		<input type="hidden" name="materia" value="<?php echo $id_materia; ?>">
-		<button type="submit">Guardar</button>
+		<button type="submit" class="btn btn-success">Guardar</button>
 	</form>
     <?php
 }

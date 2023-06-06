@@ -88,7 +88,7 @@ while ($alumno = mysqli_fetch_assoc($alumnos)) { // Iterar por los alumnos
 }
 echo "</tbody>";
 echo "</table>"; // Cerrar la tabla
-echo "<button type='submit' class='btn btn-primary'>Guardar asistencias</button>"; // Botón para guardar las asistencias modificadas
+echo "<button type='submit' class='btn btn-success'>Guardar asistencias</button>"; // Botón para guardar las asistencias modificadas
 echo "</form>";
 ?>
 </div>

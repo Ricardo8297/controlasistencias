@@ -33,61 +33,86 @@ unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESS
   </form>
 </div>
 <div id="main">
-    <?php if (!empty($error_message)): ?>
+<?php if (!empty($error_message)): ?>
         <p><?php echo $error_message; ?></p>
     <?php endif; ?>
-<form method="POST" action="registrar_asistencia.php" class="mb=5">
-    <h2>Pasar lista</h2>
-    <h3>Selecciona una materia</h3>
-    <select name="materia" id="materia">
-        <?php
-        // Conexión a la base de datos
-        include "conexion.php";
 
-        // Consulta para obtener las materias del profesor logueado
-        session_start();
-        $id_profesor = $_SESSION['id_profesor'];
-        $query = "SELECT id_materia, nombre_materia FROM materia WHERE id_profesor = $id_profesor";
-        $resultado = mysqli_query($conexion, $query);
+<div class="container">
+<div class="row">
+        <div class="col-md-12 mb-5" >
+            <h2 class="text-center  fs-1 text mb-5 fst-italic">Bienvenid@ <?php echo $_SESSION['nombre_profesor']; ?></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-5">Pasar lista</h2>
+                    <form method="POST" action="registrar_asistencia.php">
+                        <div class="form-group">
+                            <label for="materia">Selecciona una materia</label>
+                            <select name="materia" id="materia" class="form-control">
+                                <?php
+                                // Conexión a la base de datos
+                                include "conexion.php";
 
-        // Mostrar opciones en el select
-        while ($fila = mysqli_fetch_assoc($resultado)) {
-            echo "<option value='" . $fila['id_materia'] . "'>" . $fila['nombre_materia'] . "</option>";
-        }
+                                // Consulta para obtener las materias del profesor logueado
+                                session_start();
+                                $id_profesor = $_SESSION['id_profesor'];
+                                $query = "SELECT id_materia, nombre_materia FROM materia WHERE id_profesor = $id_profesor";
+                                $resultado = mysqli_query($conexion, $query);
 
-        // Cerrar conexión a la base de datos
-        mysqli_close($conexion);
-        ?>
-    </select>
-    <br>
-    <button type="submit" class="btn btn-primary mt-4">Continuar</button>
-</form>
-<br><br><br><br>
-<h2>Modificar las asistencias</h2>
-<form action="actualizar_fechas.php" method="post">
-    <label for="materia">Selecciona la materia:</label>
-    <select name="id_materia" id="id_materia">
-        <?php
-        // Conectar a la base de datos
-        require 'conexion.php';
+                                // Mostrar opciones en el select
+                                while ($fila = mysqli_fetch_assoc($resultado)) {
+                                    echo "<option value='" . $fila['id_materia'] . "'>" . $fila['nombre_materia'] . "</option>";
+                                }
 
-        // Obtener la lista de materias
-        session_start();
-        $id_profesor = $_SESSION['id_profesor'];
-        $query = "SELECT * FROM materia WHERE id_profesor = $id_profesor";
-        $resultado = mysqli_query($conexion, $query);
+                                // Cerrar conexión a la base de datos
+                                mysqli_close($conexion);
+                                ?>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info mt-5">Continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-5">Modificar las asistencias</h2>
+                    <form action="actualizar_fechas.php" method="post">
+                        <div class="form-group">
+                            <label for="materia">Selecciona la materia:</label>
+                            <select name="id_materia" id="id_materia" class="form-control">
+                                <?php
+                                // Conectar a la base de datos
+                                require 'conexion.php';
 
-        // Mostrar las opciones en el select
-        while ($fila = mysqli_fetch_assoc($resultado)) {
-            echo "<option value='" . $fila['id_materia'] . "'>" . $fila['nombre_materia'] . "</option>";
-        }
-        ?>
-    </select>
-    <br>
-    <input type="submit" value="Consultar" class="btn btn-primary mt-4">
-</form>
-<br>
-<br>
+                                // Obtener la lista de materias
+                                session_start();
+                                $id_profesor = $_SESSION['id_profesor'];
+                                $query = "SELECT * FROM materia WHERE id_profesor = $id_profesor";
+                                $resultado = mysqli_query($conexion, $query);
+
+                                // Mostrar las opciones en el select
+                                while ($fila = mysqli_fetch_assoc($resultado)) {
+                                    echo "<option value='" . $fila['id_materia'] . "'>" . $fila['nombre_materia'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Consultar" class="btn btn-info mt-5">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 

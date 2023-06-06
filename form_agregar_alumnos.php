@@ -34,39 +34,55 @@ unset($_SESSION['form_error_message']); // Limpiar el mensaje de error de $_SESS
 <?php if (!empty($error_message)): ?>
         <p><?php echo $error_message; ?></p>
     <?php endif; ?>
-<h2>Agregar Alumno a  una Materia</h2>
-    <form action="agregar_alumno.php" method="POST">
-      <label for="nombre">Nombre del Alumno:</label>
-      <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" required><br>
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Agregar Alumno a una Materia</h2>
+                    <form action="agregar_alumno.php" method="POST">
+                        <div class="form-group">
+                            <label for="nombre">Nombre del Alumno:</label>
+                            <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Ingresa solo letras" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="matricula">Matrícula del Alumno:</label>
+                            <input type="text" id="matricula" name="matricula" pattern="[0-9]+" title="Ingresa solo números" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo del Alumno:</label>
+                            <input type="email" id="correo" name="correo" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="materia">Materia:</label>
+                            <select id="materia" name="materia" class="form-control" required>
+                                <?php
+                                // Obtener las materias existentes en la base de datos
+                                require "conexion.php";
+                                session_start();
+                                $id_profesor = $_SESSION['id_profesor'];
+                                $query = "SELECT id_materia, nombre_materia FROM materia WHERE id_profesor = $id_profesor";
+                                $result = mysqli_query($conexion, $query);
 
-      <label for="matricula">Matrícula del Alumno:</label>
-      <input type="text" id="matricula" name="matricula" pattern="[0-9]+" title="Ingresa solo números" required><br>
+                                // Mostrar cada materia en una opción del select
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['id_materia'] . '">' . $row['nombre_materia'] . '</option>';
+                                }
 
-      <label for="correo">Correo del Alumno:</label>
-      <input type="email" id="correo" name="correo" required><br>
-
-      <label for="materia">Materia:</label>
-      <select id="materia" name="materia" required>
-        <?php
-          // Obtener las materias existentes en la base de datos
-          require "conexion.php";
-          session_start();
-          $id_profesor = $_SESSION['id_profesor'];
-          $query = "SELECT id_materia, nombre_materia FROM materia WHERE id_profesor = $id_profesor";
-          $result = mysqli_query($conexion, $query);
-
-          // Mostrar cada materia en una opción del select
-          while ($row = mysqli_fetch_assoc($result)) {
-            echo '<option value="' . $row['id_materia'] . '">' . $row['nombre_materia'] . '</option>';
-          }
-
-          // Cerrar la conexión a la base de datos
-          mysqli_close($conexion);
-        ?>
-      </select><br>
-
-      <input type="submit" value="Agregar">
-    </form>
+                                // Cerrar la conexión a la base de datos
+                                mysqli_close($conexion);
+                                ?>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Agregar" class="btn btn-info">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     </div>
 </body>
